@@ -1,10 +1,12 @@
 package com.spring.demo.tx.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Service
+@Slf4j
 public class TxTestService {
 
     public void doSomeTx() {
@@ -13,11 +15,12 @@ public class TxTestService {
                     new TransactionSynchronizationAdapter() {
                         @Override
                         public void afterCommit() {
-                            System.err.println("print 1");
+                            log.warn("print 1");
                         }
                     });
+            log.info("TxTestService register synchronization completed");
         } else {
-            System.err.println("print 2");
+            log.warn("print 2");
         }
     }
 }
